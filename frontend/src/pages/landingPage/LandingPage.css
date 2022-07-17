@@ -1,0 +1,13 @@
+#landing_page {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-family: "Nunito", sans-serif;
+  background-image: url("../../assets/hero.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /*linear-gradient(90deg, #287dcc, #00adfd)*/
+}

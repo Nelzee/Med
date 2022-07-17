@@ -1,0 +1,18 @@
+#nav_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+  padding: 20px;
+  background-image: linear-gradient(90deg, #287dcc, #00adfd);
+}
+
+#nav_items {
+  display: flex;
+  justify-items: auto;
+}
+
+#nav_items li {
+  padding-inline: 10px;
+  color: #911832;
+}
