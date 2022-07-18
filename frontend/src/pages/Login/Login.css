@@ -1,0 +1,26 @@
+#login_screen {
+  width: 400px;
+  margin-top: 100px;
+  margin-inline: auto;
+}
+
+#login_container {
+  height: fit-content;
+}
+
+#login_container form {
+  display: flex;
+  flex-direction: column;
+}
+
+#login_container form > * {
+  padding-block: 20px;
+  padding-inline: 10px;
+  margin-block: 20px;
+}
+
+#login_container form button {
+  background-color: rgb(24, 88, 184);
+  color: white;
+  outline: none;
+}

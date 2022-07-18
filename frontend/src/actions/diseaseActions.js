@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../api/axios";
 import {
   DISEASE_LIST_SUCCESS,
   DISEASE_LIST_FAIL,
@@ -9,7 +9,7 @@ export const listDiseases = () => async (dispatch) => {
   try {
     dispatch({ type: DISEASE_LIST_REQUEST });
 
-    const { data } = await axios.get("/api/notes");
+    const { data } = await axios.get("/notes");
     console.log(data);
 
     dispatch({
