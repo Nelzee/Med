@@ -10,7 +10,6 @@ export const listDiseases = () => async (dispatch) => {
     dispatch({ type: DISEASE_LIST_REQUEST });
 
     const { data } = await axios.get("/api/diseases");
-    console.log(data);
 
     dispatch({
       type: DISEASE_LIST_SUCCESS,
