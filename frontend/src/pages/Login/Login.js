@@ -1,21 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { login } from "../../actions/userActions";
 
 import "./Login.css";
-const Login = ({ history }) => {
-  const [credentials, setCredentials] = useState({
-    usernamge: "",
-    password: "",
-  });
+const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const validityCheck = (e) => {
-    console.log(history);
-    setCredentials((credentials) => {
-      return { ...credentials, [e.target.name]: e.target.value };
-    });
-  };
+  const userLogin = useSelector((state) => state.userLogin);
+  const { loding, error, userInfo } = userLogin;
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/");
+    }
+  }, [userInfo]);
 
   const submitHandler = (e) => {
     e.preventDefault();
+    dispatch(login(username, password));
   };
 
   return (
@@ -26,15 +32,19 @@ const Login = ({ history }) => {
         <form onSubmit={submitHandler}>
           <input
             type="text"
-            onChange={validityCheck}
-            value={credentials.username}
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
+            value={username}
             name="username"
             placeholder="username"
           />
           <input
             type="password"
-            onChange={validityCheck}
-            value={credentials.password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+            value={password}
             name="password"
             placeholder="password"
           />

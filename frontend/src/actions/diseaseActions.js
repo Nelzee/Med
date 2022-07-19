@@ -9,7 +9,7 @@ export const listDiseases = () => async (dispatch) => {
   try {
     dispatch({ type: DISEASE_LIST_REQUEST });
 
-    const { data } = await axios.get("/notes");
+    const { data } = await axios.get("/api/diseases");
     console.log(data);
 
     dispatch({

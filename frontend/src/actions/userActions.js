@@ -28,9 +28,9 @@ export const login = (email, password) => async (dispcth) => {
     dispcth({
       type: USER_LOGIN_FAIL,
       payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+        error?.response && error?.response?.data?.message
+          ? error?.response?.data?.message
+          : error?.message,
     });
   }
 };

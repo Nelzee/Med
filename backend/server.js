@@ -1,8 +1,20 @@
 const express = require("express");
-const app = express();
+const dotenv = require("dotenv");
+const connectDB = require("./config/db.js");
 const cors = require("cors");
 const PORT = process.env.PORT || 3500;
 const diseasesFile = require("./data/refinedDiseases.json");
+
+const userRoutes = require("./routes/userRoutes.js");
+const diseasesRoutes = require("./routes/diseasesRoutes.js");
+
+dotenv.config();
+
+connectDB();
+
+const app = express(); // main thing
+
+app.use(express.json()); // to accept json data
 
 // Cross origin resource sharing
 const whitelist = [
@@ -22,12 +34,12 @@ const corsOptions = {
   optionsSuccessStatus: 200,
 };
 
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.get("/", (req, res) => {
   res.send("Hello world");
 });
-
-app.use("/notes", require("./routes/api/people"));
+app.use("/api/users", userRoutes);
+app.use("/api/diseases", diseasesRoutes);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -49,7 +49,11 @@ function SearchBar({ placeholder }) {
       {filteredData.length !== 0 && (
         <div className="dataResult">
           {filteredData.slice(0, 15).map((value, key) => {
-            return <p>{value.name} </p>;
+            return (
+              <p key={key} style={{ color: "black" }}>
+                {value.name}{" "}
+              </p>
+            );
           })}
         </div>
       )}

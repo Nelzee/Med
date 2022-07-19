@@ -3,7 +3,7 @@ const router = express.Router();
 const path = require("path");
 const data = {};
 
-data.notes = require("../../data/refinedDiseases.json");
+data.notes = require("../../data/notes");
 
 router
   .route("/")
