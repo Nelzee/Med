@@ -24,10 +24,10 @@ const Header = () => {
             <Link to="/search">Search</Link>
           </li>
           <li>
-            <Link to="/Login">Login</Link>
+            <Link to="/login">Login</Link>
           </li>
           <li>
-            <a href="">Signup</a>
+            <Link to="/register">register</Link>
           </li>
         </ul>
       </nav>
