@@ -1,9 +1,25 @@
 const asyncHandler = require("express-async-handler");
-
-diseases = require("../data/refinedDiseases.json");
+const Disease = require("../models/diseaseModel");
 
 const getDiseases = asyncHandler(async (req, res) => {
-  res.json(diseases);
+  const { query } = req.body;
+
+  var regex = query.map((q) => new RegExp(["^", q, "$"].join(""), "i"));
+  console.log(regex);
+
+  const disease = await Disease.find({
+    $or: [
+      { name: { $regex: query.join(" "), $options: "i" } },
+      { symptoms: { $all: regex } },
+    ],
+  });
+
+  if (disease) {
+    res.json(disease);
+  } else {
+    res.status(401);
+    throw new Error("Invalid Email or Password");
+  }
 });
 
 module.exports = getDiseases;

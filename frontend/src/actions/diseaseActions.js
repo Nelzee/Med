@@ -5,11 +5,18 @@ import {
   DISEASE_LIST_REQUEST,
 } from "../constants/diseaseConstants";
 
-export const listDiseases = () => async (dispatch) => {
+export const listDiseases = (query) => async (dispatch) => {
   try {
     dispatch({ type: DISEASE_LIST_REQUEST });
 
-    const { data } = await axios.get("/api/diseases");
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+      },
+    };
+
+    const { data } = await axios.post("/api/diseases", { query }, config);
+    console.log(data);
 
     dispatch({
       type: DISEASE_LIST_SUCCESS,

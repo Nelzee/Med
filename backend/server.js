@@ -7,6 +7,7 @@ const diseasesFile = require("./data/refinedDiseases.json");
 
 const userRoutes = require("./routes/userRoutes.js");
 const diseasesRoutes = require("./routes/diseasesRoutes.js");
+const dataDiseases = require("./data/cleaner");
 
 dotenv.config();
 

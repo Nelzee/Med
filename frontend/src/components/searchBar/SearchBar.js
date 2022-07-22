@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { listDiseases } from "../../actions/diseaseActions";
 import "./SearchBar.css";
 // import SearchIcon from "@material-ui/icons/Search";
 // import CloseIcon from "@material-ui/icons/Close";
 
 function SearchBar({ placeholder }) {
+  const dispatch = useDispatch();
+
   const diseaseList = useSelector((state) => state.diseaseList);
   const { diseases } = diseaseList;
   const [filteredData, setFilteredData] = useState([]);
@@ -13,6 +16,8 @@ function SearchBar({ placeholder }) {
   const handleFilter = (event) => {
     const searchWord = event.target.value;
     setWordEntered(searchWord);
+    console.log(searchWord);
+    dispatch(listDiseases(searchWord.split(" ")));
     const newFilter = diseases.filter((value) => {
       return value.name.toLowerCase().includes(searchWord.toLowerCase());
     });
@@ -20,7 +25,7 @@ function SearchBar({ placeholder }) {
     if (searchWord === "") {
       setFilteredData([]);
     } else {
-      setFilteredData(newFilter);
+      setFilteredData(diseases);
     }
   };
 

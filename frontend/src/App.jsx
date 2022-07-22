@@ -1,7 +1,5 @@
 import "./App.css";
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { listDiseases } from "./actions/diseaseActions";
+import React from "react";
 import LandingPage from "./pages/landingPage/LandingPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login/Login";
@@ -11,11 +9,6 @@ import Header from "./components/header/Header";
 import DiseasePage from "./pages/diseasePage/DiseasePage";
 
 const App = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(listDiseases());
-  });
-
   return (
     <div id="App" className="App">
       <Router>
