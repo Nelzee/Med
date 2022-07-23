@@ -1,0 +1,29 @@
+.docRegForm {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(2, 1fr);
+  width: min-content;
+  padding: 15px;
+  margin: auto;
+}
+
+.input_element {
+  font-size: 17px;
+  padding: 14px 16px;
+  width: 330px;
+  border: 1px solid black;
+  border-radius: 6px;
+}
+
+.input_element > input {
+  background: none;
+  border: 0;
+  box-shadow: none;
+  font-size: 17px;
+  padding: 1px;
+  width: 300px;
+}
+
+select {
+  width: 300px;
+}

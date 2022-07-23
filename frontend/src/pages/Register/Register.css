@@ -1,10 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
 
-body {
-  min-height: 100vh;
-  background-color: dodgerblue;
-}
-
 section {
   width: 100%;
   max-width: 420px;
@@ -16,13 +11,13 @@ section {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-form {
+/* form {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   flex-grow: 1;
   padding-bottom: 1rem;
-}
+} */
 
 a,
 a:visited {

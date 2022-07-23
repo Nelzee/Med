@@ -7,6 +7,7 @@ import Register from "./pages/Register/Register";
 import SearchResults from "./pages/searchResults/SearchResults";
 import Header from "./components/header/Header";
 import DiseasePage from "./pages/diseasePage/DiseasePage";
+import DoctorRegisterPage from "./pages/doctorRegisterPage/DoctorRestisterPage";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/search" element={<SearchResults />} />
           <Route path="/disease" element={<DiseasePage />} />
+          <Route path="/doctorReg" element={<DoctorRegisterPage />} />
         </Routes>
       </Router>
     </div>

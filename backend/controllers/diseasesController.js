@@ -5,7 +5,6 @@ const getDiseases = asyncHandler(async (req, res) => {
   const { query } = req.body;
 
   var regex = query.map((q) => new RegExp(["^", q, "$"].join(""), "i"));
-  console.log(regex);
 
   const disease = await Disease.find({
     $or: [
