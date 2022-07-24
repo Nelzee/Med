@@ -1,14 +1,27 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
+import { getDisease } from "../../actions/diseaseActions";
+
+import "./DiseasePage.css";
 
 const DiseasePage = () => {
-  const diseaseList = useSelector((state) => state.diseaseList);
-  const { diseases } = diseaseList;
+  const dispatch = useDispatch();
+  const location = useLocation().state;
+  const [disease, setDisease] = useState({});
+  console.log(location);
 
-  const disease = diseases[0];
+  useEffect(() => {
+    const data = dispatch(getDisease(location));
+    data
+      .then((result) => {
+        setDisease(result);
+      })
+      .catch((err) => {});
+  }, [location, dispatch]);
 
   return (
-    <div>
+    <div className="disease_container">
       <h1>{disease.name}</h1>
     </div>
   );

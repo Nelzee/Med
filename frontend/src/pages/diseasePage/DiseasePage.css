@@ -1,4 +1,4 @@
-.search_result {
+.disease_container {
   align-items: center;
   background-color: #fff;
   border: none;
@@ -8,8 +8,4 @@
   margin: 30px auto;
   padding: 20px 28px;
   width: 70%;
-}
-
-.search_result h2 a {
-  color: black;
 }

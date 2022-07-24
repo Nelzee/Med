@@ -16,7 +16,6 @@ export const listDiseases = (query) => async (dispatch) => {
     };
 
     const { data } = await axios.post("/api/diseases", { query }, config);
-    console.log(data);
 
     dispatch({
       type: DISEASE_LIST_SUCCESS,
@@ -24,6 +23,26 @@ export const listDiseases = (query) => async (dispatch) => {
     });
   } catch (error) {
     dispatch({
+      type: DISEASE_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.response,
+    });
+  }
+};
+export const getDisease = (id) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+      },
+    };
+
+    const { data } = await axios.post("/api/diseases/disease", { id }, config);
+    return data;
+  } catch (error) {
+    console.log({
       type: DISEASE_LIST_FAIL,
       payload:
         error.response && error.response.data.message
