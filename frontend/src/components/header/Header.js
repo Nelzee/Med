@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./header.css";
 
 const Header = () => {
+  const [loggedIn, setLoggedIn] = useState(false);
   return (
     <div>
       <nav id="nav_container">
@@ -15,7 +17,7 @@ const Header = () => {
 
         <ul id="nav_items">
           <li>
-            <a href="">Home</a>
+            <Link to="/">home</Link>
           </li>
           <li>
             <Link to="/disease">disease</Link>
@@ -23,12 +25,20 @@ const Header = () => {
           <li>
             <Link to="/search">Search</Link>
           </li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-          <li>
-            <Link to="/register">register</Link>
-          </li>
+          {loggedIn ? (
+            <li>
+              <Link to="/dashboard">dashboard</Link>
+            </li>
+          ) : (
+            <>
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+              <li>
+                <Link to="/register">register</Link>
+              </li>
+            </>
+          )}
         </ul>
       </nav>
     </div>

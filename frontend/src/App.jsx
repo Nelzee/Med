@@ -8,6 +8,7 @@ import SearchResults from "./pages/searchResults/SearchResults";
 import Header from "./components/header/Header";
 import DiseasePage from "./pages/diseasePage/DiseasePage";
 import DoctorRegisterPage from "./pages/doctorRegisterPage/DoctorRestisterPage";
+import Dashboard from "./pages/dashboard/Dashboard";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
           <Route path="/search" element={<SearchResults />} />
           <Route path="/disease" element={<DiseasePage />} />
           <Route path="/doctorReg" element={<DoctorRegisterPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </Router>
     </div>

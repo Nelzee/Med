@@ -18,7 +18,7 @@ const DiseasePage = () => {
         setDisease(result);
       })
       .catch((err) => {});
-  }, [location, dispatch]);
+  }, [location]);
 
   return (
     <div className="disease_container">
