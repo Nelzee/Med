@@ -23,6 +23,25 @@ const DiseasePage = () => {
   return (
     <div className="disease_container">
       <h1>{disease.name}</h1>
+      <p>{disease.details}</p>
+      <h2>Symptoms</h2>
+      <ul>
+        {disease.symptoms.map((symptom) => {
+          return <li>{symptom}</li>;
+        })}
+      </ul>
+      <h2>Medications</h2>
+      <ul>
+        {disease.commonTestsAndProcedures.map((tests) => {
+          return <li>{tests}</li>;
+        })}
+      </ul>
+      <h2>Medications</h2>
+      <ul>
+        {disease.commonMedications.map((medication) => {
+          return <li>{medication}</li>;
+        })}
+      </ul>
     </div>
   );
 };

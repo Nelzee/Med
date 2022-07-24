@@ -19,6 +19,11 @@
   border-radius: 6px;
 }
 
+.input_element > p {
+  color: red;
+  margin-bottom: 5px;
+}
+
 .input_element > input {
   background: none;
   border: 0;
@@ -36,4 +41,5 @@ select {
   background-image: linear-gradient(90deg, #287dcc, #00adfd);
   cursor: pointer;
   grid-column: 1 / -1;
+  border: none;
 }
