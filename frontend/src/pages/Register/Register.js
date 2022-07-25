@@ -1,204 +1,189 @@
-import { useRef, useState, useEffect } from "react";
-import {
-  faCheck,
-  faTimes,
-  faInfoCircle,
-} from "@fortawesome/free-solid-svg-icons";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useState } from "react";
 import "./Register.css";
-import { Link, useNavigate } from "react-router-dom";
-import { register } from "../../actions/userActions";
-import { useDispatch } from "react-redux";
 
-const EMAIL_REGEX = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
-const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
+const EMAIL_REGEX = /\S+@\S+\.\S+/;
+const NAME_REGEX = /^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const ID_REGEX = /^(\d{2})-(\d{6})(\d?)([a-zA-Z]{1})(\d{2})/;
 
-const Register = () => {
-  const userRef = useRef();
-  const errRef = useRef();
+const DoctorRestisterPage = () => {
+  const [validFirstName, setValidFirstName] = useState(true);
+  const [firstNameFocus, setFirstNameFocus] = useState(false);
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const [validLastName, setValidLastName] = useState(true);
+  const [LastNameFocus, setLastNameFocus] = useState(false);
 
-  const [user, setUser] = useState("");
-  const [validName, setValidName] = useState(false);
-  const [userFocus, setUserFocus] = useState(false);
+  const [validEmail, setValidEmail] = useState(true);
+  const [emailFocus, setEmailFocus] = useState(false);
 
-  const [pwd, setPwd] = useState("");
-  const [validPwd, setValidPwd] = useState(false);
+  const [validPwd, setValidPwd] = useState(true);
   const [pwdFocus, setPwdFocus] = useState(false);
 
-  const [matchPwd, setMatchPwd] = useState("");
-  const [validMatch, setValidMatch] = useState(false);
+  const [validMatch, setValidMatch] = useState(true);
   const [matchFocus, setMatchFocus] = useState(false);
 
-  const [errMsg, setErrMsg] = useState("");
+  const [validId, setValidId] = useState(true);
+  const [idFocus, setIdFocus] = useState(false);
 
-  useEffect(() => {
-    userRef.current.focus();
-  }, []);
+  const [credentials, setCredentials] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    idNumber: "",
+  });
 
-  useEffect(() => {
-    setValidName(USER_REGEX.test(user));
-  }, [user]);
+  const handleChange = (e) => {
+    setCredentials((credentials) => {
+      return { ...credentials, [e.target.name]: e.target.value };
+    });
+  };
 
-  useEffect(() => {
-    setValidPwd(PWD_REGEX.test(pwd));
-    setValidMatch(pwd === matchPwd);
-  }, [pwd, matchPwd]);
+  const handleFocus = (e) => {
+    switch (e.target.name) {
+      case "email":
+        setEmailFocus((emailFocus) => !emailFocus);
+        setValidEmail(EMAIL_REGEX.test(credentials.email));
+        break;
+      case "firstName":
+        setFirstNameFocus((LastNameFocus) => !LastNameFocus);
+        setValidFirstName(NAME_REGEX.test(credentials.firstName));
+        break;
+      case "lastName":
+        setLastNameFocus((LastNameFocus) => !LastNameFocus);
+        setValidLastName(NAME_REGEX.test(credentials.lastName));
+        break;
+      case "password":
+        setPwdFocus((pwdFocus) => !pwdFocus);
+        setValidPwd(PWD_REGEX.test(credentials.password));
+        break;
+      case "confirmPassword":
+        setMatchFocus((matchFocus) => !matchFocus);
+        setValidMatch(credentials.password === credentials.confirmPassword);
+        break;
+      case "idNumber":
+        setIdFocus((idFocus) => !idFocus);
+        setValidId(ID_REGEX.test(credentials.idNumber));
+        break;
 
-  useEffect(() => {
-    setErrMsg("");
-  }, [user, pwd, matchPwd]);
+      default:
+        break;
+    }
+  };
 
-  const submitHandler = (e) => {
+  console.log(validEmail);
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(register(user, pwd));
-    console.log("envoked");
+    console.log(credentials);
   };
 
   return (
-    <>
-      {
-        <section>
-          <p
-            ref={errRef}
-            className={errMsg ? "errmsg" : "offscreen"}
-            aria-live="assertive"
-          >
-            {errMsg}
-          </p>
-          <h1>Register</h1>
-          <form onSubmit={submitHandler}>
-            <label htmlFor="username">
-              Username:
-              <FontAwesomeIcon
-                icon={faCheck}
-                className={validName ? "valid" : "hide"}
-              />
-              <FontAwesomeIcon
-                icon={faTimes}
-                className={validName || !user ? "hide" : "invalid"}
-              />
-            </label>
-            <input
-              type="text"
-              id="username"
-              ref={userRef}
-              autoComplete="off"
-              onChange={(e) => setUser(e.target.value)}
-              value={user}
-              required
-              aria-invalid={validName ? "false" : "true"}
-              aria-describedby="uidnote"
-              onFocus={() => setUserFocus(true)}
-              onBlur={() => setUserFocus(false)}
-            />
-            <p
-              id="uidnote"
-              className={
-                userFocus && user && !validName ? "instructions" : "offscreen"
-              }
-            >
-              <FontAwesomeIcon icon={faInfoCircle} />
-              4 to 24 characters.
-              <br />
-              Must begin with a letter.
-              <br />
-              Letters, numbers, underscores, hyphens allowed.
-            </p>
-
-            <label htmlFor="password">
-              Password:
-              <FontAwesomeIcon
-                icon={faCheck}
-                className={validPwd ? "valid" : "hide"}
-              />
-              <FontAwesomeIcon
-                icon={faTimes}
-                className={validPwd || !pwd ? "hide" : "invalid"}
-              />
-            </label>
-            <input
-              type="password"
-              id="password"
-              onChange={(e) => setPwd(e.target.value)}
-              value={pwd}
-              required
-              aria-invalid={validPwd ? "false" : "true"}
-              aria-describedby="pwdnote"
-              onFocus={() => setPwdFocus(true)}
-              onBlur={() => setPwdFocus(false)}
-            />
-            <p
-              id="pwdnote"
-              className={pwdFocus && !validPwd ? "instructions" : "offscreen"}
-            >
-              <FontAwesomeIcon icon={faInfoCircle} />
-              8 to 24 characters.
-              <br />
-              Must include uppercase and lowercase letters, a number and a
-              special character.
-              <br />
-              Allowed special characters:{" "}
-              <span aria-label="exclamation mark">!</span>{" "}
-              <span aria-label="at symbol">@</span>{" "}
-              <span aria-label="hashtag">#</span>{" "}
-              <span aria-label="dollar sign">$</span>{" "}
-              <span aria-label="percent">%</span>
-            </p>
-
-            <label htmlFor="confirm_pwd">
-              Confirm Password:
-              <FontAwesomeIcon
-                icon={faCheck}
-                className={validMatch && matchPwd ? "valid" : "hide"}
-              />
-              <FontAwesomeIcon
-                icon={faTimes}
-                className={validMatch || !matchPwd ? "hide" : "invalid"}
-              />
-            </label>
-            <input
-              type="password"
-              id="confirm_pwd"
-              onChange={(e) => setMatchPwd(e.target.value)}
-              value={matchPwd}
-              required
-              aria-invalid={validMatch ? "false" : "true"}
-              aria-describedby="confirmnote"
-              onFocus={() => setMatchFocus(true)}
-              onBlur={() => setMatchFocus(false)}
-            />
-            <p
-              id="confirmnote"
-              className={
-                matchFocus && !validMatch ? "instructions" : "offscreen"
-              }
-            >
-              <FontAwesomeIcon icon={faInfoCircle} />
-              Must match the first password input field.
-            </p>
-
-            <button
-              disabled={!validName || !validPwd || !validMatch ? true : false}
-            >
-              Sign Up
-            </button>
-          </form>
+    <form className="docRegForm" onSubmit={handleSubmit}>
+      <h2>Sign Up</h2>
+      <div className="input_element">
+        {validFirstName ? "" : <p>Please enter name</p>}
+        <input
+          onChange={handleChange}
+          onBlur={handleFocus}
+          type="text"
+          id="firstName"
+          name="firstName"
+          placeholder="first Name"
+        />
+      </div>
+      <div className="input_element">
+        {validLastName ? "" : <p>Please enter your last name</p>}
+        <input
+          onChange={handleChange}
+          onBlur={handleFocus}
+          type="text"
+          id="lastName"
+          name="lastName"
+          placeholder="last Name"
+        />
+      </div>
+      <div className="input_element">
+        {validEmail ? "" : <p>this email is not valid</p>}
+        <input
+          onChange={handleChange}
+          onBlur={handleFocus}
+          type="email"
+          id="email"
+          name="email"
+          placeholder="example@example.com"
+        />
+      </div>
+      <div className="input_element">
+        {validPwd ? (
+          ""
+        ) : (
           <p>
-            Already registered?
+            <FontAwesomeIcon icon={faInfoCircle} />
+            8 to 24 characters.
             <br />
-            <span className="line">
-              {/*put router link here*/}
-              <Link to="/login">Sign In</Link>
-            </span>
+            Must include uppercase and lowercase letters, a number and a special
+            character.
+            <br />
+            Allowed special characters:{" "}
+            <span aria-label="exclamation mark">!</span>{" "}
+            <span aria-label="at symbol">@</span>{" "}
+            <span aria-label="hashtag">#</span>{" "}
+            <span aria-label="dollar sign">$</span>{" "}
+            <span aria-label="percent">%</span>
           </p>
-        </section>
-      }
-    </>
+        )}
+        <input
+          onChange={handleChange}
+          onBlur={handleFocus}
+          type="password"
+          id="password"
+          name="password"
+          placeholder="password"
+        />
+      </div>
+      <div className="input_element">
+        {validMatch ? "" : <p>this password does not match the first one</p>}
+        <input
+          onChange={handleChange}
+          onBlur={handleFocus}
+          type="password"
+          id="confirmPassword"
+          name="confirmPassword"
+          placeholder="confirm password"
+        />
+      </div>
+      <div className="input_element">
+        {validId ? "" : <p>Invalid Id Number</p>}
+        <input
+          onChange={handleChange}
+          onBlur={handleFocus}
+          type="text"
+          id="idNumber"
+          name="idNumber"
+          placeholder="id number"
+        />
+      </div>
+      <button
+        disabled={
+          validEmail &&
+          validFirstName &&
+          validLastName &&
+          validId &&
+          validPwd &&
+          validMatch &&
+          credentials.firstName
+            ? false
+            : true
+        }
+      >
+        Submit
+      </button>
+    </form>
   );
 };
 
-export default Register;
+export default DoctorRestisterPage;

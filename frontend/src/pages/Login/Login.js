@@ -91,9 +91,7 @@ const LoginPage = () => {
       </div>
 
       <button
-        disabled={
-          validEmail && validPwd && credentials.firstName ? false : true
-        }
+        disabled={validEmail && validPwd && credentials.email ? false : true}
       >
         Submit
       </button>
