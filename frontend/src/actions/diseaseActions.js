@@ -31,23 +31,3 @@ export const listDiseases = (query) => async (dispatch) => {
     });
   }
 };
-export const getDisease = (id) => async (dispatch) => {
-  try {
-    const config = {
-      headers: {
-        "Content-type": "application/json",
-      },
-    };
-
-    const { data } = await axios.post("/api/diseases/disease", { id }, config);
-    return data;
-  } catch (error) {
-    console.log({
-      type: DISEASE_LIST_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.response,
-    });
-  }
-};

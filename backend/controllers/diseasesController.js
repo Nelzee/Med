@@ -22,7 +22,7 @@ const getDiseases = asyncHandler(async (req, res) => {
 });
 
 const getDisease = asyncHandler(async (req, res) => {
-  const { id } = req.body;
+  const id = req.params.id;
 
   const disease = await Disease.findById(id);
 

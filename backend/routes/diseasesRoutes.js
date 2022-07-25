@@ -7,6 +7,6 @@ const { protect } = require("../middleware/authMiddleware.js");
 const router = express.Router();
 
 router.route("/").post(getDiseases);
-router.route("/disease").post(getDisease);
+router.route("/disease/:id").get(getDisease);
 
 module.exports = router;
