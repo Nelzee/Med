@@ -8,7 +8,7 @@ import {
   USER_REGISTER_SUCCESS,
 } from "../constants/userConstants";
 
-export const login = (email, password) => async (dispcth) => {
+export const login = (credentials) => async (dispcth) => {
   try {
     dispcth({ type: USER_LOGIN_REQUEST });
 
@@ -20,13 +20,11 @@ export const login = (email, password) => async (dispcth) => {
 
     const { data } = await axios.post(
       "/api/users/login",
-      { email, password },
+      { credentials },
       config
     );
 
     dispcth({ type: USER_LOGIN_SUCCESS, payload: data });
-
-    localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
     dispcth({
       type: USER_LOGIN_FAIL,
@@ -38,7 +36,7 @@ export const login = (email, password) => async (dispcth) => {
   }
 };
 
-export const register = (name, password) => async (dispatch) => {
+export const register = (credentials) => async (dispatch) => {
   try {
     dispatch({ type: USER_REGISTER_REQUEST });
 
@@ -48,13 +46,11 @@ export const register = (name, password) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post("/api/users", { name, password }, config);
+    const { data } = await axios.post("/api/users", { credentials }, config);
 
     dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
 
     dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
-
-    localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
     dispatch({
       type: USER_REGISTER_FAIL,

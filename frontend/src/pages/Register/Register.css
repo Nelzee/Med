@@ -87,3 +87,19 @@ button {
 .line {
   display: inline-block;
 }
+
+.input_element.date {
+  padding-block: 5px;
+}
+.input_element.date input[type="text"] {
+  font-family: "Nunito", sans-serif;
+  font-size: 18px;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+}
+
+.input_element.date p {
+  color: black;
+  padding: 0;
+}

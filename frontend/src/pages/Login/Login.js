@@ -1,12 +1,20 @@
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { login } from "../../actions/userActions";
 import "./Login.css";
 
 const EMAIL_REGEX = /\S+@\S+\.\S+/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 const LoginPage = () => {
+  const dispatch = useDispatch();
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   const [validEmail, setValidEmail] = useState(true);
   const [emailFocus, setEmailFocus] = useState(false);
 
@@ -39,15 +47,14 @@ const LoginPage = () => {
     }
   };
 
-  console.log(validEmail);
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(credentials);
+    dispatch(login(credentials));
   };
 
   return (
     <form className="loginForm" onSubmit={handleSubmit}>
+      {userInfo && <Navigate to="/dashboard" replace={true} />}
       <h2>Login</h2>
       <div className="input_element">
         {validEmail ? "" : <p>this email is not valid</p>}

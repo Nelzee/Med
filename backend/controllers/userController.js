@@ -6,64 +6,59 @@ const generateToken = require("../utils/generateToken.js");
 //@route           POST /api/users/login
 //@access          Public
 const authUser = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
+  const {
+    credentials: { email, password },
+  } = req.body;
 
-  if (email && password) {
+  const user = await User.findOne({ email });
+
+  if (user && (await user.matchPassword(password))) {
     res.json({
-      _id: "3232",
-      name: "Nelson",
-      email: email,
-      isAdmin: true,
-      pic: "user",
-      token: generateToken(82742),
+      _id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      idNumber: user.idNumber,
+      DOB: user.DOB,
+      token: generateToken(user._id),
     });
   } else {
     res.status(401);
     throw new Error("Invalid Email or Password");
   }
-
-  // const user = await User.findOne({ email });
-
-  // if (user && (await user.matchPassword(password))) {
-  //   res.json({
-  //     _id: user._id,
-  //     name: user.name,
-  //     email: user.email,
-  //     isAdmin: user.isAdmin,
-  //     pic: user.pic,
-  //     token: generateToken(user._id),
-  //   });
-  // } else {
-  //   res.status(401);
-  //   throw new Error("Invalid Email or Password");
-  // }
 });
 
 //@description     Register new user
 //@route           POST /api/users/
 //@access          Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, password } = req.body;
-  console.log("backend envoked");
+  const {
+    credentials: { firstName, lastName, email, password, idNumber, DOB },
+  } = req.body;
+  console.log(firstName, lastName);
 
-  const userExists = await User.findOne({ name });
+  const userExists = await User.findOne({ email });
 
   if (userExists) {
-    res.status(404);
+    res.status(404).json({
+      message: "user already exists",
+    });
     throw new Error("User already exists");
   }
 
   const user = await User.create({
-    name,
+    firstName,
+    lastName,
+    email,
     password,
+    idNumber,
+    DOB,
   });
 
   if (user) {
     res.status(201).json({
-      _id: user._id,
-      name: user.name,
-      isAdmin: user.isAdmin,
-      token: generateToken(user._id),
+      message: "success",
     });
   } else {
     res.status(400);
