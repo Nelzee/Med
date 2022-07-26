@@ -1,9 +1,17 @@
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { logout } from "../../actions/userActions";
 import "./header.css";
 
 const Header = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const dispatch = useDispatch();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const handleClick = (e) => {
+    dispatch(logout(e));
+  };
+
   return (
     <div>
       <nav id="nav_container">
@@ -25,10 +33,15 @@ const Header = () => {
           <li>
             <Link to="/search">Search</Link>
           </li>
-          {loggedIn ? (
-            <li>
-              <Link to="/dashboard">dashboard</Link>
-            </li>
+          {userInfo ? (
+            <>
+              <li>
+                <Link to="/dashboard">dashboard</Link>
+              </li>
+              <li onClick={handleClick}>
+                <span>{userInfo.firstName}</span>
+              </li>
+            </>
           ) : (
             <>
               <li>

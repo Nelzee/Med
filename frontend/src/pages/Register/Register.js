@@ -37,6 +37,7 @@ const DoctorRestisterPage = () => {
   const [idFocus, setIdFocus] = useState(false);
 
   const [credentials, setCredentials] = useState({
+    role: "user",
     firstName: "",
     lastName: "",
     email: "",

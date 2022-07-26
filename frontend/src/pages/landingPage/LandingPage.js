@@ -10,7 +10,7 @@ const LandingPage = () => {
   const { userInfo } = userLogin;
 
   if (!userInfo) {
-    navigate("./register");
+    navigate("/");
   }
 
   return (

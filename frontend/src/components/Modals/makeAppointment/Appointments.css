@@ -1,0 +1,7 @@
+.appointementsForm {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 10px;
+  width: 600px;
+  padding: 20px;
+}

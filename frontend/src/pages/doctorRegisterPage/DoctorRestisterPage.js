@@ -1,12 +1,36 @@
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import Select from "react-select";
+import { register } from "../../actions/userActions";
 import "./DoctorRegisterPage.css";
 
 const options = [
   { value: "General Practitioner", label: "General Practitioner" },
   { value: "Specialist", label: "Specialist" },
+];
+
+const cities = [
+  { value: "Harare", label: "Harare" },
+  { value: "Bulawayo", label: "Bulawayo" },
+  { value: "Chitungwiza", label: "Chitungwiza" },
+  { value: "Mutare", label: "Mutare" },
+  { value: "Gweru", label: "Gweru" },
+  { value: "Kwekwe", label: "Kwekwe" },
+  { value: "Kadoma", label: "Kadoma" },
+  { value: "Masvingo", label: "Masvingo" },
+  { value: "Chinhoyi", label: "Chinhoyi" },
+  { value: "Marondera", label: "Marondera" },
+  { value: "Bindura", label: "Bindura" },
+  { value: "Hwange", label: "Hwange" },
+  { value: "Beitbridge", label: "Beitbridge" },
+  { value: "Zvishavane", label: "Zvishavane" },
+  { value: "Victoria Falls", label: "Victoria Falls" },
+  { value: "Redcliff", label: "Redcliff" },
+  { value: "Chiredzi", label: "Chiredzi" },
+  { value: "Gwanda", label: "Gwanda" },
+  { value: "Lupane", label: "Lupane" },
 ];
 
 const EMAIL_REGEX = /\S+@\S+\.\S+/;
@@ -15,6 +39,7 @@ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const ID_REGEX = /^(\d{2})-(\d{6})(\d?)([a-zA-Z]{1})(\d{2})/;
 
 const DoctorRestisterPage = () => {
+  const dispatch = useDispatch();
   const [validFirstName, setValidFirstName] = useState(true);
   const [firstNameFocus, setFirstNameFocus] = useState(false);
 
@@ -36,6 +61,7 @@ const DoctorRestisterPage = () => {
   const [errMsg, setErrMsg] = useState("");
 
   const [credentials, setCredentials] = useState({
+    role: "doctor",
     firstName: "",
     lastName: "",
     email: "",
@@ -43,6 +69,7 @@ const DoctorRestisterPage = () => {
     confirmPassword: "",
     idNumber: "",
     type: options[0].value,
+    city: cities[0].value,
   });
 
   const handleChange = (e) => {
@@ -83,11 +110,16 @@ const DoctorRestisterPage = () => {
     }
   };
 
-  console.log(validEmail);
+  const handleLocation = (e) => {
+    setCredentials({ ...credentials, city: e.value });
+  };
+  const handleType = (e) => {
+    setCredentials({ ...credentials, type: e.value });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(credentials);
+    dispatch(register(credentials));
   };
 
   return (
@@ -126,7 +158,16 @@ const DoctorRestisterPage = () => {
           placeholder="example@example.com"
         />
       </div>
-      <Select options={options} defaultValue={options[0]} />
+      <Select
+        onChange={handleType}
+        options={options}
+        defaultValue={options[0]}
+      />
+      <Select
+        onChange={handleLocation}
+        options={cities}
+        defaultValue={cities[0]}
+      />
       <div className="input_element">
         {validPwd ? (
           ""

@@ -7,6 +7,7 @@ const diseasesFile = require("./data/refinedDiseases.json");
 
 const userRoutes = require("./routes/userRoutes.js");
 const diseasesRoutes = require("./routes/diseasesRoutes.js");
+const appointmentRoutes = require("./routes/appointmentRoutes.js");
 const dataDiseases = require("./data/cleaner");
 
 dotenv.config();
@@ -42,5 +43,6 @@ app.get("/", (req, res) => {
 });
 app.use("/api/users", userRoutes);
 app.use("/api/diseases", diseasesRoutes);
+app.use("/api/appointments", appointmentRoutes);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

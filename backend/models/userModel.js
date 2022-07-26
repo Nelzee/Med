@@ -3,6 +3,10 @@ const bcrypt = require("bcryptjs");
 
 const userSchema = mongoose.Schema(
   {
+    role: {
+      type: String,
+      required: true,
+    },
     firstName: {
       type: String,
       required: true,
@@ -31,7 +35,15 @@ const userSchema = mongoose.Schema(
     },
     DOB: {
       type: Date,
-      required: true,
+      required: false,
+    },
+    city: {
+      type: String,
+      required: false,
+    },
+    type: {
+      type: String,
+      required: false,
     },
   },
   {
