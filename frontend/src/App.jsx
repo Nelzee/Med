@@ -9,6 +9,7 @@ import Header from "./components/header/Header";
 import DiseasePage from "./pages/diseasePage/DiseasePage";
 import DoctorRegisterPage from "./pages/doctorRegisterPage/DoctorRestisterPage";
 import Dashboard from "./pages/dashboard/Dashboard";
+import AppointmentsPage from "./pages/Appointments/AppointmentsPage";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
           <Route path="/disease" element={<DiseasePage />} />
           <Route path="/doctorReg" element={<DoctorRegisterPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/makeAppointment" element={<AppointmentsPage />} />
         </Routes>
       </Router>
     </div>

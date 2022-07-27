@@ -62,7 +62,12 @@ const DoctorRestisterPage = () => {
           options={cities}
           defaultValue={cities[0]}
         />
-        <Select options={optionDoctors} />
+        <Select
+          onChange={handleChange}
+          options={cities}
+          defaultValue={cities[0]}
+        />
+        <Select options={optionDoctors} defaultValue={optionDoctors[0]} />
         <button disabled={false}>Submit</button>
       </form>
     </div>

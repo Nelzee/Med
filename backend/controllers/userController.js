@@ -49,7 +49,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   if (user) {
     res.status(201).json({
-      message: "success",
+      message: "success message",
     });
   } else {
     res.status(400);

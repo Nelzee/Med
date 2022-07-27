@@ -27,12 +27,6 @@ const Header = () => {
           <li>
             <Link to="/">home</Link>
           </li>
-          <li>
-            <Link to="/disease">disease</Link>
-          </li>
-          <li>
-            <Link to="/search">Search</Link>
-          </li>
           {userInfo ? (
             <>
               <li>
