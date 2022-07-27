@@ -102,13 +102,10 @@ const DoctorRestisterPage = ({ toggle }) => {
   return (
     <div className="modalBackground">
       <form className="docRegForm" onSubmit={handleSubmit}>
-        <h2
-          onClick={() => {
-            toggle(false);
-          }}
-        >
-          Sign Up
-        </h2>
+        <div className="organFormHeader">
+          <h2>fill in details</h2>
+          <span onClick={() => toggle(false)}>X</span>
+        </div>
         <div className="input_element">
           {validFirstName ? "" : <p>Please enter name</p>}
           <input

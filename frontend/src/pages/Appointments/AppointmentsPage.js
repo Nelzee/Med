@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Select from "react-select";
+import { useDispatch, useSelector } from "react-redux";
+import { makeAppointment } from "../../actions/appointmentActions";
 import axios from "../../api/axios";
 import "./AppointmentsPage.css";
 
@@ -27,8 +29,19 @@ const cities = [
 ];
 
 const AppointmentsPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   const [doctors, setDoctors] = useState([]);
   const [city, setCity] = useState(cities[0].value);
+  const [appointment, setAppointment] = useState({
+    userId: userInfo?._id,
+    doctorId: "",
+    details: "",
+  });
 
   const handleChange = (e) => {
     setCity(e.value);
@@ -47,6 +60,12 @@ const AppointmentsPage = () => {
     fetching();
   }, [city]);
 
+  useEffect(() => {
+    if (!userInfo) {
+      navigate("/login");
+    }
+  });
+
   const handleClick = (e, i) => {
     e.preventDefault();
     setDoctors((prev) => {
@@ -54,13 +73,22 @@ const AppointmentsPage = () => {
         return { ...doc, selected: false };
       });
       nxt[i].selected = true;
+      setAppointment((app) => {
+        return { ...app, doctorId: nxt[i]._id };
+      });
       return nxt;
+    });
+  };
+
+  const handleDetails = (e) => {
+    setAppointment((app) => {
+      return { ...app, details: e.target.value };
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(doctors);
+    dispatch(makeAppointment(appointment));
   };
 
   return (
@@ -90,7 +118,7 @@ const AppointmentsPage = () => {
             </div>
           </div>
           <div className="symptoms">
-            <input type="text" />
+            <input type="text" onChange={handleDetails} />
           </div>
           <button disabled={false}>
             <Link to="/makeAppointment">Submit</Link>

@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Select from "react-select";
+import { useDispatch, useSelector } from "react-redux";
+import { makeAppointment } from "../../../actions/appointmentActions";
 import axios from "../../../api/axios";
 import "./Appointments.css";
 
@@ -25,9 +28,20 @@ const cities = [
   { value: "Lupane", label: "Lupane" },
 ];
 
-const DoctorRestisterPage = () => {
+const AppointmentsPage = ({ toggle }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   const [doctors, setDoctors] = useState([]);
   const [city, setCity] = useState(cities[0].value);
+  const [appointment, setAppointment] = useState({
+    userId: userInfo?._id,
+    doctorId: "",
+    details: "",
+  });
 
   const handleChange = (e) => {
     setCity(e.value);
@@ -36,42 +50,88 @@ const DoctorRestisterPage = () => {
   useEffect(() => {
     const fetching = async () => {
       const { data } = await axios.get(`/api/appointments/${city}`);
-      setDoctors(data);
+      setDoctors(
+        data.map((d) => {
+          return { ...d, selected: false };
+        })
+      );
     };
 
     fetching();
   }, [city]);
 
-  const optionDoctors = doctors.map((doctor) => {
-    return {
-      value: doctor._id,
-      label: `${doctor.firstName} ${doctor.lastName}`,
-    };
+  useEffect(() => {
+    if (!userInfo) {
+      navigate("/login");
+    }
   });
+
+  const handleClick = (e, i) => {
+    e.preventDefault();
+    setDoctors((prev) => {
+      const nxt = prev.map((doc) => {
+        return { ...doc, selected: false };
+      });
+      nxt[i].selected = true;
+      setAppointment((app) => {
+        return { ...app, doctorId: nxt[i]._id };
+      });
+      return nxt;
+    });
+  };
+
+  const handleDetails = (e) => {
+    setAppointment((app) => {
+      return { ...app, details: e.target.value };
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(doctors);
+    dispatch(makeAppointment(appointment));
   };
 
   return (
     <div className="modalBackground">
       <form className="appointementsForm" onSubmit={handleSubmit}>
+        <div className="appointmentsFormHeader">
+          <h2>fill in details</h2>
+          <span onClick={() => toggle(false)}>X</span>
+        </div>
         <Select
           onChange={handleChange}
           options={cities}
           defaultValue={cities[0]}
         />
-        <Select
-          onChange={handleChange}
-          options={cities}
-          defaultValue={cities[0]}
-        />
-        <Select options={optionDoctors} defaultValue={optionDoctors[0]} />
-        <button disabled={false}>Submit</button>
+        <div className="appointementsFormInner">
+          <div className="appointmentsInput">
+            <div className="doctors">
+              <input type="text" />
+              <div className="doctorsResults">
+                {doctors.map((doctor, i) => {
+                  return (
+                    <>
+                      <h3>{doctor.firstName}</h3>
+                      <button onClick={(e) => handleClick(e, i)}>
+                        {doctor.selected ? "selected" : "select"}
+                      </button>
+                      <p>{doctor.idNumber}</p>
+                    </>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="symptoms">
+          <input type="text" onChange={handleDetails} />
+        </div>
+        <button disabled={false}>
+          <Link to="/makeAppointment">Submit</Link>
+        </button>
       </form>
     </div>
   );
 };
 
-export default DoctorRestisterPage;
+export default AppointmentsPage;

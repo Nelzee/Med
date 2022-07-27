@@ -15,6 +15,7 @@ const authUser = asyncHandler(async (req, res) => {
   if (user && (await user.matchPassword(password))) {
     res.json({
       _id: user._id,
+      role: user.role,
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
@@ -48,9 +49,7 @@ const registerUser = asyncHandler(async (req, res) => {
   const user = await User.create(credentials);
 
   if (user) {
-    res.status(201).json({
-      message: "success message",
-    });
+    res.status(201);
   } else {
     res.status(400);
     throw new Error("User not found");
