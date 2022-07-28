@@ -1,16 +1,14 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { logout } from "../../actions/userActions";
+import Settings from "../Modals/settings/Settings";
 import "./header.css";
 
 const Header = () => {
-  const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
 
-  const handleClick = (e) => {
-    dispatch(logout(e));
-  };
+  const [settings, showSettings] = useState(false);
+  const { userInfo } = userLogin;
 
   return (
     <div>
@@ -32,7 +30,7 @@ const Header = () => {
               <li>
                 <Link to="/dashboard">dashboard</Link>
               </li>
-              <li onClick={handleClick}>
+              <li onClick={() => showSettings(true)}>
                 <span>{userInfo.firstName}</span>
               </li>
             </>
@@ -48,6 +46,7 @@ const Header = () => {
           )}
         </ul>
       </nav>
+      {settings && <Settings toggle={showSettings} />}
     </div>
   );
 };

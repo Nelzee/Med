@@ -9,6 +9,11 @@
   align-items: center;
 }
 
+.organRegForm {
+  width: 600px;
+  padding: 20px;
+}
+
 .organFormHeader {
   grid-column: 1 / -1;
   display: flex;

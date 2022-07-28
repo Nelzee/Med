@@ -1,0 +1,11 @@
+.settingsContainer {
+  width: 310px;
+  height: 230px;
+  padding: 10px;
+  background-color: white;
+}
+
+.settingsHeader {
+  display: flex;
+  justify-content: space-between;
+}
