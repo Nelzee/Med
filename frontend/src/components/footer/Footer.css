@@ -1,0 +1,21 @@
+.footer {
+  box-shadow: 1px 1px 20px 2px black;
+}
+
+.footerContentContainer {
+  width: 800px;
+  margin-inline: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+
+.footerLogo > h2 > span {
+  font-size: 2rem;
+  color: #287dcc;
+}
+
+.footerLinks > ul > li > * {
+  color: black;
+}

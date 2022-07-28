@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Settings from "../Modals/settings/Settings";
 import "./header.css";
 
 const Header = () => {
+  const navigate = useNavigate();
+
   const userLogin = useSelector((state) => state.userLogin);
 
   const [settings, showSettings] = useState(false);
@@ -14,23 +16,26 @@ const Header = () => {
     <div>
       <nav id="nav_container">
         <Link to="/">
-          <div className="logo">
-            <h3>
-              medi<span>care</span>
-            </h3>
+          <div className="nav_logo">
+            <h2>
+              med<span>i</span>care
+            </h2>
           </div>
         </Link>
 
         <ul id="nav_items">
           <li>
-            <Link to="/">home</Link>
+            <Link to="/">Home</Link>
           </li>
           {userInfo ? (
             <>
               <li>
-                <Link to="/dashboard">dashboard</Link>
+                <Link to="/dashboard">Dashboard</Link>
               </li>
-              <li onClick={() => showSettings(true)}>
+              <li>
+                <Link to="/appointments">Appointments</Link>
+              </li>
+              <li className="settingsToggle" onClick={() => showSettings(true)}>
                 <span>{userInfo.firstName}</span>
               </li>
             </>
@@ -40,7 +45,7 @@ const Header = () => {
                 <Link to="/login">Login</Link>
               </li>
               <li>
-                <Link to="/register">register</Link>
+                <Link to="/register">Register</Link>
               </li>
             </>
           )}

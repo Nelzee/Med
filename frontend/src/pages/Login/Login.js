@@ -2,7 +2,7 @@ import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { login } from "../../actions/userActions";
 import "./Login.css";
 
@@ -53,56 +53,58 @@ const LoginPage = () => {
   };
 
   return (
-    <form className="loginForm" onSubmit={handleSubmit}>
-      {userInfo && <Navigate to="/dashboard" replace={true} />}
-      <h2>Login</h2>
-      <div className="input_element">
-        {validEmail ? "" : <p>this email is not valid</p>}
-        <input
-          onChange={handleChange}
-          onBlur={handleFocus}
-          type="email"
-          id="email"
-          name="email"
-          placeholder="example@example.com"
-        />
-      </div>
+    <div className="loginFormContainer">
+      <form className="loginForm" onSubmit={handleSubmit}>
+        {userInfo && <Navigate to="/dashboard" replace={true} />}
+        <h2>Login</h2>
+        <div className="input_element">
+          {validEmail ? "" : <p>this email is not valid</p>}
+          <input
+            onChange={handleChange}
+            onBlur={handleFocus}
+            type="email"
+            id="email"
+            name="email"
+            placeholder="example@example.com"
+          />
+        </div>
 
-      <div className="input_element">
-        {validPwd ? (
-          ""
-        ) : (
-          <p>
-            <FontAwesomeIcon icon={faInfoCircle} />
-            8 to 24 characters.
-            <br />
-            Must include uppercase and lowercase letters, a number and a special
-            character.
-            <br />
-            Allowed special characters:{" "}
-            <span aria-label="exclamation mark">!</span>{" "}
-            <span aria-label="at symbol">@</span>{" "}
-            <span aria-label="hashtag">#</span>{" "}
-            <span aria-label="dollar sign">$</span>{" "}
-            <span aria-label="percent">%</span>
-          </p>
-        )}
-        <input
-          onChange={handleChange}
-          onBlur={handleFocus}
-          type="password"
-          id="password"
-          name="password"
-          placeholder="password"
-        />
-      </div>
+        <div className="input_element">
+          {validPwd ? (
+            ""
+          ) : (
+            <p>
+              <FontAwesomeIcon icon={faInfoCircle} />
+              8 to 24 characters.
+              <br />
+              Must include uppercase and lowercase letters, a number and a
+              special character.
+              <br />
+              Allowed special characters:{" "}
+              <span aria-label="exclamation mark">!</span>{" "}
+              <span aria-label="at symbol">@</span>{" "}
+              <span aria-label="hashtag">#</span>{" "}
+              <span aria-label="dollar sign">$</span>{" "}
+              <span aria-label="percent">%</span>
+            </p>
+          )}
+          <input
+            onChange={handleChange}
+            onBlur={handleFocus}
+            type="password"
+            id="password"
+            name="password"
+            placeholder="password"
+          />
+        </div>
 
-      <button
-        disabled={validEmail && validPwd && credentials.email ? false : true}
-      >
-        Submit
-      </button>
-    </form>
+        <button
+          disabled={validEmail && validPwd && credentials.email ? false : true}
+        >
+          Submit
+        </button>
+      </form>
+    </div>
   );
 };
 

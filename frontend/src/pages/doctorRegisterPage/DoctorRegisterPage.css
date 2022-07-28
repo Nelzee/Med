@@ -1,3 +1,7 @@
+.docRegFormContainer {
+  min-height: 100vh;
+}
+
 .docRegForm {
   display: grid;
   gap: 10px;

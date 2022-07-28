@@ -7,6 +7,15 @@
   background-image: linear-gradient(90deg, #287dcc, #00adfd);
 }
 
+.nav_logo > h2 {
+  padding-bottom: 10px;
+}
+
+.nav_logo > h2 > span {
+  font-size: 2rem;
+  color: #911832;
+}
+
 #nav_items {
   display: flex;
   justify-items: auto;
@@ -14,5 +23,10 @@
 
 #nav_items li {
   padding-inline: 10px;
-  color: #911832;
+  color: #fff;
+}
+
+.settingsToggle {
+  cursor: pointer;
+  color: white;
 }

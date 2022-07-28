@@ -1,3 +1,7 @@
+.dashboardPage {
+  min-height: 100vh;
+}
+
 .dashBoardContainer {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -5,6 +9,7 @@
   justify-items: center;
   width: 70%;
   margin-inline: auto;
+  margin-top: 100px;
 }
 
 .dashContainer {

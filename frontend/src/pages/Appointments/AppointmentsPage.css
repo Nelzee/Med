@@ -1,3 +1,7 @@
+.appointmentsPage {
+  min-height: 100vh;
+}
+
 .appointementsForm {
   margin-inline: auto;
   width: 800px;
