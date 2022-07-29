@@ -21,7 +21,6 @@ const makeAppointment = asyncHandler(async (req, res) => {
   } = req.body;
 
   const userExists = await Appointment.findOne({ user, doctor });
-
   if (userExists) {
     res.status(404).json({
       message: "you already have an appointment with this doctor",
@@ -30,7 +29,7 @@ const makeAppointment = asyncHandler(async (req, res) => {
   }
 
   const appointment = await Appointment.create({ doctor, user, details });
-
+  console.log(appointment);
   if (appointment) {
     res.status(201);
   } else {
@@ -42,9 +41,9 @@ const makeAppointment = asyncHandler(async (req, res) => {
 const getAppointment = asyncHandler(async (req, res) => {
   const doctorId = req.params.doctorId;
 
-  const appointment = await Appointment.find({ doctor: doctorId })
-    .populate("user")
-    .populate("doctor");
+  const appointment = await Appointment.find({ doctor: doctorId }).populate(
+    "user"
+  );
 
   if (appointment) {
     res.json(appointment);

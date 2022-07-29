@@ -7,7 +7,7 @@ const { fetchDoctors } = require("../controllers/appointmentsController");
 const router = express.Router();
 
 router.route("/:city").get(fetchDoctors);
-router.post("/appointment", makeAppointment);
+router.post("/appointments", makeAppointment);
 router.route("/appointment/:doctorId").get(getAppointment);
 
 module.exports = router;

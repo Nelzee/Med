@@ -11,6 +11,10 @@
   padding: 20px;
 }
 
+.footer > h2 {
+  color: #09124e;
+}
+
 .footerLogo > h2 > span {
   font-size: 2rem;
   color: #287dcc;

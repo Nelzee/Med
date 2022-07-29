@@ -9,7 +9,7 @@ export const makeAppointment = (appointment) => async (dispcth) => {
     };
 
     const { data } = await axios.post(
-      "/api/appointments/appointment",
+      "/api/appointments/appointments/",
       { appointment },
       config
     );

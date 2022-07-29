@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import OrganDonor from "../../components/Modals/organDonor/OrganDonor";
 import Appointments from "../../components/Modals/makeAppointment/Appointments";
 import "./Dashboard.css";
+import axios from "../../api/axios";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -12,7 +13,19 @@ const Dashboard = () => {
   const { userInfo } = userLogin;
 
   const [organs, setOrgans] = useState(false);
-  const [appointments, setAppointments] = useState(false);
+  const [appointmentsModal, showAppointmentModel] = useState(false);
+  const [appointments, setAppointments] = useState([]);
+
+  useEffect(() => {
+    const getAppointments = async () => {
+      const { data } = await axios.get(
+        `/api/appointments/appointment/${userInfo._id}`
+      );
+      setAppointments(data);
+      console.log(data);
+    };
+    getAppointments();
+  }, []);
 
   useEffect(() => {
     if (!userInfo) {
@@ -23,17 +36,33 @@ const Dashboard = () => {
   return (
     <div className="dashboardPage">
       {userInfo?.role === "doctor" ? (
-        <div className="dashBoardContainer">doctor</div>
+        <div className="dashBoardContainer">
+          <div className="dashContainer">
+            <h3>Appointments</h3>
+            <div className="appointmentList">
+              <div className="appointment">
+                {appointments.map((appointment) => {
+                  return (
+                    <>
+                      <h3>{appointment.user.firstName}</h3>
+                      <p>{appointment.details}</p>
+                    </>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
       ) : (
         <div className="dashBoardContainer">
           <div className="dashContainer appointments">
             <h2>Appointments</h2>
             <p>Request or view the appointements </p>
             <div className="botton_container">
-              <button onClick={() => setAppointments(true)}>
+              <button onClick={() => showAppointmentModel(true)}>
                 View Appointments
               </button>
-              <button onClick={() => setAppointments(true)}>
+              <button onClick={() => showAppointmentModel(true)}>
                 Request Appointment
               </button>
             </div>
@@ -52,7 +81,7 @@ const Dashboard = () => {
       )}
 
       {organs ? <OrganDonor toggle={setOrgans} /> : ""}
-      {appointments ? <Appointments toggle={setAppointments} /> : ""}
+      {appointmentsModal && <Appointments toggle={showAppointmentModel} />}
     </div>
   );
 };

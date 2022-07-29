@@ -88,6 +88,7 @@ const AppointmentsPage = ({ toggle }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(appointment);
     dispatch(makeAppointment(appointment));
   };
 
@@ -126,9 +127,7 @@ const AppointmentsPage = ({ toggle }) => {
         <div className="symptoms">
           <input type="text" onChange={handleDetails} />
         </div>
-        <button disabled={false}>
-          <Link to="/makeAppointment">Submit</Link>
-        </button>
+        <button disabled={false}>Submit</button>
       </form>
     </div>
   );
