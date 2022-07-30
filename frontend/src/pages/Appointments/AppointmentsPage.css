@@ -57,3 +57,12 @@
   height: 40px;
   padding: auto;
 }
+
+.approvedAppointment {
+  display: flex;
+  justify-content: space-between;
+}
+
+.approvedAppointment button {
+  cursor: pointer;
+}

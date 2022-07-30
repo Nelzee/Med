@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
+import { useDispatch } from "react-redux";
 import Select from "react-select";
+import { approveAppointment } from "../../../actions/appointmentActions";
 import "./ScheduleAppointment.css";
 
 const times = [
@@ -22,24 +24,28 @@ const times = [
   { value: "16:30", label: "16:30" },
 ];
 
-const ScheduleAppointment = ({ toggle, id }) => {
-  const [dateTime, setDateTime] = useState({
+const ScheduleAppointment = ({ toggle, appointment }) => {
+  const dispatch = useDispatch();
+
+  const [appointmentUpdate, setAppointmentUpdate] = useState({
+    id: appointment._id,
     date: new Date(),
-    time: "",
+    time: times[0].value,
   });
 
   const handleDate = (e) => {
-    setDateTime((dateTime) => {
+    setAppointmentUpdate((dateTime) => {
       return { ...dateTime, date: e };
     });
   };
 
   const handleTime = (e) => {
-    setDateTime((dateTime) => {
+    setAppointmentUpdate((dateTime) => {
       return { ...dateTime, time: e.value };
     });
   };
   const handleSubmit = (e) => {
+    dispatch(approveAppointment(appointmentUpdate));
     e.preventDefault();
   };
 
@@ -50,15 +56,15 @@ const ScheduleAppointment = ({ toggle, id }) => {
           <h2>Set schedule</h2>
           <span onClick={() => toggle(false)}>X</span>
         </div>
-        <h3>{id}</h3>
         <div className="scheduleContainer">
-          <DatePicker selected={dateTime.date} onChange={handleDate} />
+          <DatePicker selected={appointmentUpdate.date} onChange={handleDate} />
           <Select
             onChange={handleTime}
             options={times}
             defaultValue={times[0]}
           />
         </div>
+        <button>Submit</button>
       </form>
     </div>
   );

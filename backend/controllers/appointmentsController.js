@@ -53,4 +53,62 @@ const getAppointment = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { fetchDoctors, makeAppointment, getAppointment };
+const getApprovedAppointments = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+
+  const appointments = await Appointment.find({
+    user: id,
+    approved: true,
+  }).populate("doctor");
+
+  if (appointments) {
+    res.json(appointments);
+  } else {
+    res.status(400);
+    throw new Error("appointment failed");
+  }
+});
+
+const approveAppointment = asyncHandler(async (req, res) => {
+  const { time, date } = req.body;
+
+  try {
+    const appointment = await Appointment.findById(req.params.id);
+
+    if (appointment) {
+      appointment.date = date;
+      appointment.time = time;
+      appointment.approved = true;
+
+      const updatedAppointment = await appointment.save();
+      res.json(updatedAppointment);
+    } else {
+      res.status(404);
+      throw new Error("Appointment not found");
+    }
+  } catch (error) {}
+});
+const deleteAppointment = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const appointment = await Appointment.findById(req.params.id);
+
+    if (appointment) {
+      await appointment.remove();
+      res.json({ message: "note removed" });
+    } else {
+      res.status(404);
+      throw new Error("Appointment not found");
+    }
+  } catch (error) {}
+});
+
+module.exports = {
+  fetchDoctors,
+  makeAppointment,
+  getAppointment,
+  approveAppointment,
+  getApprovedAppointments,
+  deleteAppointment,
+};

@@ -18,10 +18,10 @@ const Dashboard = () => {
   const [scheduleAppointmentModal, setScheduleAppointmentModal] =
     useState(false);
   const [appointments, setAppointments] = useState([]);
-  const [appointmentId, setAppointmentId] = useState("");
+  const [appointment, setAppointment] = useState("");
 
-  const handleSchedule = (e, id) => {
-    setAppointmentId(id);
+  const handleSchedule = (e, appointment) => {
+    setAppointment(appointment);
     setScheduleAppointmentModal(true);
   };
 
@@ -57,9 +57,7 @@ const Dashboard = () => {
                         <p>{appointment.details}</p>
                       </div>
                       <div className="appointment_schelude_toggle">
-                        <button
-                          onClick={(e) => handleSchedule(e, appointment._id)}
-                        >
+                        <button onClick={(e) => handleSchedule(e, appointment)}>
                           schedule appointment
                         </button>
                       </div>
@@ -101,7 +99,7 @@ const Dashboard = () => {
       {scheduleAppointmentModal && (
         <ScheduleAppointment
           toggle={setScheduleAppointmentModal}
-          id={appointmentId}
+          appointment={appointment}
         />
       )}
       {appointmentsModal && <Appointments toggle={showAppointmentModel} />}
