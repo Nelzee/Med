@@ -28,7 +28,7 @@ const cities = [
   { value: "Lupane", label: "Lupane" },
 ];
 
-const AppointmentsPage = ({ toggle }) => {
+const AppointmentsPage = ({ id, toggle }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -105,6 +105,7 @@ const AppointmentsPage = ({ toggle }) => {
           defaultValue={cities[0]}
         />
         <div className="appointementsFormInner">
+          <h1>{id}</h1>
           <div className="appointmentsInput">
             <div className="doctors">
               <input type="text" />

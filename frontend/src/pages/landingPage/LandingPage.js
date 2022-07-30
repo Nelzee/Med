@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import SearchBar from "../../components/searchBar/SearchBar";
@@ -9,9 +9,11 @@ const LandingPage = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  if (!userInfo) {
-    navigate("/");
-  }
+  useEffect(() => {
+    if (!userInfo) {
+      navigate("/");
+    }
+  }, []);
 
   return (
     <div id="landing_page">

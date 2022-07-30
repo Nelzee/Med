@@ -1,0 +1,15 @@
+.scheduleForm {
+  padding: 20px;
+}
+.scheduleFormHeader {
+  display: flex;
+  justify-content: space-between;
+}
+
+.scheduleFormHeader span {
+  cursor: pointer;
+}
+
+body#root#App.dashboardPage.modalBackground {
+  overflow-y: hidden;
+}

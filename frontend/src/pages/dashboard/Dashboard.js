@@ -5,6 +5,7 @@ import OrganDonor from "../../components/Modals/organDonor/OrganDonor";
 import Appointments from "../../components/Modals/makeAppointment/Appointments";
 import "./Dashboard.css";
 import axios from "../../api/axios";
+import ScheduleAppointment from "../../components/Modals/scheduleAppointment/ScheduleAppointment";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -14,7 +15,15 @@ const Dashboard = () => {
 
   const [organs, setOrgans] = useState(false);
   const [appointmentsModal, showAppointmentModel] = useState(false);
+  const [scheduleAppointmentModal, setScheduleAppointmentModal] =
+    useState(false);
   const [appointments, setAppointments] = useState([]);
+  const [appointmentId, setAppointmentId] = useState("");
+
+  const handleSchedule = (e, id) => {
+    setAppointmentId(id);
+    setScheduleAppointmentModal(true);
+  };
 
   useEffect(() => {
     const getAppointments = async () => {
@@ -22,7 +31,6 @@ const Dashboard = () => {
         `/api/appointments/appointment/${userInfo._id}`
       );
       setAppointments(data);
-      console.log(data);
     };
     getAppointments();
   }, []);
@@ -40,16 +48,25 @@ const Dashboard = () => {
           <div className="dashContainer">
             <h3>Appointments</h3>
             <div className="appointmentList">
-              <div className="appointment">
+              <>
                 {appointments.map((appointment) => {
                   return (
-                    <>
-                      <h3>{appointment.user.firstName}</h3>
-                      <p>{appointment.details}</p>
-                    </>
+                    <div className="appointment">
+                      <div className="appointment_details">
+                        <h3>{appointment.user.firstName}</h3>
+                        <p>{appointment.details}</p>
+                      </div>
+                      <div className="appointment_schelude_toggle">
+                        <button
+                          onClick={(e) => handleSchedule(e, appointment._id)}
+                        >
+                          schedule appointment
+                        </button>
+                      </div>
+                    </div>
                   );
                 })}
-              </div>
+              </>
             </div>
           </div>
         </div>
@@ -80,7 +97,13 @@ const Dashboard = () => {
         </div>
       )}
 
-      {organs ? <OrganDonor toggle={setOrgans} /> : ""}
+      {organs && <OrganDonor toggle={setOrgans} />}
+      {scheduleAppointmentModal && (
+        <ScheduleAppointment
+          toggle={setScheduleAppointmentModal}
+          id={appointmentId}
+        />
+      )}
       {appointmentsModal && <Appointments toggle={showAppointmentModel} />}
     </div>
   );
