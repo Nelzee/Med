@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import axios from "../api/axios";
 import {
   USER_LOGIN_FAIL,
@@ -57,9 +56,9 @@ export const register = (credentials) => async (dispatch) => {
     dispatch({
       type: USER_REGISTER_FAIL,
       payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+        error?.response && error?.response?.data?.message
+          ? error?.response?.data?.message
+          : error?.message,
     });
   }
 };

@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
-import { makeAppointment } from "../../../actions/appointmentActions";
+import { makeAppointment } from "../../../actions/reserveAppointmentActions";
 import axios from "../../../api/axios";
 import "./Appointments.css";
+import { RESERVE_APPOINTMENT_CLEAR } from "../../../constants/reserveAppointmentConstants";
 
 const cities = [
   { value: "Harare", label: "Harare" },
@@ -33,15 +34,29 @@ const AppointmentsPage = ({ id, toggle }) => {
   const navigate = useNavigate();
 
   const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const { response } = userLogin;
+
+  const reserveAppointmentState = useSelector(
+    (state) => state.reserveAppointment
+  );
+  const {
+    response: appointmentResponse,
+    error: appointmentError,
+    loading,
+  } = reserveAppointmentState;
 
   const [doctors, setDoctors] = useState([]);
   const [city, setCity] = useState(cities[0].value);
   const [appointment, setAppointment] = useState({
-    userId: userInfo?._id,
+    userId: response?._id,
     doctorId: "",
     details: "",
   });
+
+  const handleClose = () => {
+    toggle(false);
+    dispatch({ type: RESERVE_APPOINTMENT_CLEAR });
+  };
 
   const handleChange = (e) => {
     setCity(e.value);
@@ -61,7 +76,7 @@ const AppointmentsPage = ({ id, toggle }) => {
   }, [city]);
 
   useEffect(() => {
-    if (!userInfo) {
+    if (!response) {
       navigate("/login");
     }
   });
@@ -96,19 +111,22 @@ const AppointmentsPage = ({ id, toggle }) => {
     <div className="modalBackground">
       <form className="appointementsForm" onSubmit={handleSubmit}>
         <div className="appointmentsFormHeader">
+          {loading && <h2>loading</h2>}
+          {appointmentResponse && <h2>{appointmentResponse.message}</h2>}
+          {appointmentError && <h2>{appointmentError}</h2>}
           <h2>fill in details</h2>
-          <span onClick={() => toggle(false)}>X</span>
+          <span onClick={handleClose}>X</span>
         </div>
         <Select
           onChange={handleChange}
           options={cities}
           defaultValue={cities[0]}
         />
+        <input type="text" />
         <div className="appointementsFormInner">
           <h1>{id}</h1>
           <div className="appointmentsInput">
             <div className="doctors">
-              <input type="text" />
               <div className="doctorsResults">
                 {doctors.map((doctor, i) => {
                   return (

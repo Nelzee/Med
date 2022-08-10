@@ -8,7 +8,7 @@ const Settings = ({ toggle }) => {
 
   const userLogin = useSelector((state) => state.userLogin);
   const {
-    userInfo: { firstName, lastName },
+    response: { firstName, lastName },
   } = userLogin;
 
   const handleLogout = (e) => {

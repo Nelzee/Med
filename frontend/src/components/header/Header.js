@@ -10,7 +10,7 @@ const Header = () => {
   const userLogin = useSelector((state) => state.userLogin);
 
   const [settings, showSettings] = useState(false);
-  const { userInfo } = userLogin;
+  const { response } = userLogin;
 
   return (
     <div>
@@ -27,7 +27,7 @@ const Header = () => {
           <li>
             <Link to="/">Home</Link>
           </li>
-          {userInfo ? (
+          {response ? (
             <>
               <li>
                 <Link to="/dashboard">Dashboard</Link>
@@ -36,7 +36,7 @@ const Header = () => {
                 <Link to="/appointments">Appointments</Link>
               </li>
               <li className="settingsToggle" onClick={() => showSettings(true)}>
-                <span>{userInfo.firstName}</span>
+                <span>{response.firstName}</span>
               </li>
             </>
           ) : (

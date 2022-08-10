@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
-import { approveAppointment } from "../../../actions/appointmentActions";
+import { approveAppointment } from "../../../actions/approveAppointmentActions";
+import { APPROVE_APPOINTMENT_CLEAR } from "../../../constants/approveAppointmentsConstants";
 import "./ScheduleAppointment.css";
 
 const times = [
@@ -27,6 +28,11 @@ const times = [
 const ScheduleAppointment = ({ toggle, appointment }) => {
   const dispatch = useDispatch();
 
+  const approveAppointmentState = useSelector(
+    (state) => state.approveAppointment
+  );
+  const { response, error, loading } = approveAppointmentState;
+
   const [appointmentUpdate, setAppointmentUpdate] = useState({
     id: appointment._id,
     date: new Date(),
@@ -39,22 +45,33 @@ const ScheduleAppointment = ({ toggle, appointment }) => {
     });
   };
 
+  const handleClose = () => {
+    toggle(false);
+    dispatch({ type: APPROVE_APPOINTMENT_CLEAR });
+  };
+
   const handleTime = (e) => {
     setAppointmentUpdate((dateTime) => {
       return { ...dateTime, time: e.value };
     });
   };
-  const handleSubmit = (e) => {
-    dispatch(approveAppointment(appointmentUpdate));
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    dispatch(approveAppointment(appointmentUpdate));
+    console.log(approveAppointmentState);
   };
 
   return (
     <div className="modalBackground">
       <form className="scheduleForm" onSubmit={handleSubmit}>
         <div className="scheduleFormHeader">
-          <h2>Set schedule</h2>
-          <span onClick={() => toggle(false)}>X</span>
+          <div>
+            {loading && <h2>loading</h2>}
+            {response && <h2>{response.message}</h2>}
+            {error && <h2>{error.message}</h2>}
+            <h2>Set schedule</h2>
+          </div>
+          <span onClick={handleClose}>X</span>
         </div>
         <div className="scheduleContainer">
           <DatePicker selected={appointmentUpdate.date} onChange={handleDate} />

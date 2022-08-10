@@ -11,7 +11,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const { response, loading, error } = userLogin;
 
   const [organs, setOrgans] = useState(false);
   const [appointmentsModal, showAppointmentModel] = useState(false);
@@ -28,7 +28,7 @@ const Dashboard = () => {
   useEffect(() => {
     const getAppointments = async () => {
       const { data } = await axios.get(
-        `/api/appointments/appointment/${userInfo._id}`
+        `/api/appointments/appointment/${response._id}`
       );
       setAppointments(data);
     };
@@ -36,14 +36,14 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-    if (!userInfo) {
+    if (!response) {
       navigate("/");
     }
-  }, [userInfo]);
+  }, [response]);
 
   return (
     <div className="dashboardPage">
-      {userInfo?.role === "doctor" ? (
+      {response?.role === "doctor" ? (
         <div className="dashBoardContainer">
           <div className="dashContainer">
             <h3>Appointments</h3>

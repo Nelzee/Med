@@ -1,7 +1,13 @@
 import axios from "../api/axios";
+import {
+  RESERVE_APPOINTMENT_FAIL,
+  RESERVE_APPOINTMENT_REQUEST,
+  RESERVE_APPOINTMENT_SUCCESS,
+} from "../constants/reserveAppointmentConstants";
 
-export const makeAppointment = (appointment) => async (dispcth) => {
+export const makeAppointment = (appointment) => async (dispatch) => {
   try {
+    dispatch({ type: RESERVE_APPOINTMENT_REQUEST });
     const config = {
       headers: {
         "Content-type": "application/json",
@@ -13,27 +19,15 @@ export const makeAppointment = (appointment) => async (dispcth) => {
       { appointment },
       config
     );
+    dispatch({ type: RESERVE_APPOINTMENT_SUCCESS, payload: data });
   } catch (error) {
-    console.log(error);
-  }
-};
-
-export const approveAppointment = (appointment) => async (dispcth) => {
-  const { id, time, date } = appointment;
-  try {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-
-    const { data } = await axios.put(
-      `/api/appointments/${id}`,
-      { time, date },
-      config
-    );
-  } catch (error) {
-    console.log(error);
+    dispatch({
+      type: RESERVE_APPOINTMENT_FAIL,
+      payload:
+        error?.response && error?.response?.data?.message
+          ? error?.response?.data?.message
+          : error?.message,
+    });
   }
 };
 

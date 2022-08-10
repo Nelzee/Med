@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { deleteAppointment } from "../../actions/appointmentActions";
+import { deleteAppointment } from "../../actions/reserveAppointmentActions";
 import axios from "../../api/axios";
 import "./AppointmentsPage.css";
 

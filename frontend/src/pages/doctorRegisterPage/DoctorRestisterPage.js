@@ -1,9 +1,11 @@
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import { register } from "../../actions/userActions";
+import { USER_REGISTER_CLEAR } from "../../constants/userConstants";
 import "./DoctorRegisterPage.css";
 
 const options = [
@@ -39,6 +41,11 @@ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const ID_REGEX = /^(\d{2})-(\d{6})(\d?)([a-zA-Z]{1})(\d{2})/;
 
 const DoctorRestisterPage = () => {
+  const navigate = useNavigate();
+
+  const userRegisterState = useSelector((state) => state.userRegister);
+  const { loading, response, error } = userRegisterState;
+
   const dispatch = useDispatch();
   const [validFirstName, setValidFirstName] = useState(true);
   const [firstNameFocus, setFirstNameFocus] = useState(false);
@@ -110,6 +117,13 @@ const DoctorRestisterPage = () => {
     }
   };
 
+  useEffect(() => {
+    if (response) {
+      navigate("/login");
+      dispatch({ type: USER_REGISTER_CLEAR });
+    }
+  }, [response]);
+
   const handleLocation = (e) => {
     setCredentials({ ...credentials, city: e.value });
   };
@@ -125,6 +139,9 @@ const DoctorRestisterPage = () => {
   return (
     <div className="docRegFormContainer">
       <form className="docRegForm" onSubmit={handleSubmit}>
+        {loading && <h2>Loading</h2>}
+        {error && <h2>{error}</h2>}
+        {response && <h2>{response?.message}</h2>}
         <h2>Sign Up</h2>
         <div className="input_element">
           {validFirstName ? "" : <p>Please enter name</p>}

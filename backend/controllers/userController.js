@@ -49,7 +49,9 @@ const registerUser = asyncHandler(async (req, res) => {
   const user = await User.create(credentials);
 
   if (user) {
-    res.status(201);
+    res.status(201).json({
+      message: "registration successful",
+    });
   } else {
     res.status(400);
     throw new Error("User not found");

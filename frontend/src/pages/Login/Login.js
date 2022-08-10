@@ -13,7 +13,7 @@ const LoginPage = () => {
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const { response, loading, error } = userLogin;
 
   const [validEmail, setValidEmail] = useState(true);
   const [emailFocus, setEmailFocus] = useState(false);
@@ -55,7 +55,7 @@ const LoginPage = () => {
   return (
     <div className="loginFormContainer">
       <form className="loginForm" onSubmit={handleSubmit}>
-        {userInfo && <Navigate to="/dashboard" replace={true} />}
+        {response && <Navigate to="/dashboard" replace={true} />}
         <h2>Login</h2>
         <div className="input_element">
           {validEmail ? "" : <p>this email is not valid</p>}

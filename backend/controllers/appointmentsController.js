@@ -81,7 +81,7 @@ const approveAppointment = asyncHandler(async (req, res) => {
       appointment.approved = true;
 
       const updatedAppointment = await appointment.save();
-      res.json(updatedAppointment);
+      res.json({ message: "Appointment Schedules successfully" });
     } else {
       res.status(404);
       throw new Error("Appointment not found");
