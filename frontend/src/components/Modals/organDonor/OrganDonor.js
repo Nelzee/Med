@@ -1,7 +1,7 @@
-import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import Select from "react-select";
+import axios from "../../../api/axios";
+import { useSelector } from "react-redux";
 import "./OrganDonor.css";
 
 const options = [
@@ -18,33 +18,28 @@ const options = [
   { value: "Part of intestine", label: "Part of intestine" },
 ];
 
-const EMAIL_REGEX = /\S+@\S+\.\S+/;
-const NAME_REGEX = /^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/;
-const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const ID_REGEX = /^(\d{2})-(\d{6})(\d?)([a-zA-Z]{1})(\d{2})/;
-
 const DoctorRestisterPage = ({ toggle }) => {
-  const [errMsg, setErrMsg] = useState("");
+  const userLogin = useSelector((state) => state.userLogin);
+  const {
+    response: { _id },
+  } = userLogin;
 
-  const [credentials, setCredentials] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    idNumber: "",
-    type: options[0].value,
-  });
+  const [organs, setOrgans] = useState([]);
 
   const handleChange = (e) => {
-    setCredentials((credentials) => {
-      return { ...credentials, [e.target.name]: e.target.value };
-    });
+    setOrgans(e?.map((val) => val.value));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(credentials);
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+      },
+    };
+
+    await axios.post("/api/users/organs", { id: _id, organs }, config);
+    toggle(false);
   };
 
   return (
@@ -55,7 +50,12 @@ const DoctorRestisterPage = ({ toggle }) => {
           <span onClick={() => toggle(false)}>X</span>
         </div>
 
-        <Select options={options} isMulti defaultValue={options[0]} />
+        <Select
+          onChange={handleChange}
+          options={options}
+          isMulti
+          defaultValue={options[0]}
+        />
 
         <button>Submit</button>
       </form>

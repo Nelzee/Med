@@ -45,6 +45,15 @@ const userSchema = mongoose.Schema(
       type: String,
       required: false,
     },
+    organDonor: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
+    organs: {
+      type: Array,
+      required: false,
+    },
   },
   {
     timestamps: true,

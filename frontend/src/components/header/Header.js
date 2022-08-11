@@ -29,15 +29,31 @@ const Header = () => {
           </li>
           {response ? (
             <>
-              <li>
-                <Link to="/dashboard">Dashboard</Link>
-              </li>
-              <li>
-                <Link to="/appointments">Appointments</Link>
-              </li>
-              <li className="settingsToggle" onClick={() => showSettings(true)}>
-                <span>{response.firstName}</span>
-              </li>
+              {response.role === "user" ? (
+                <>
+                  <li>
+                    <Link to="/dashboard">Dashboard</Link>
+                  </li>
+                  <li>
+                    <Link to="/appointments">Appointments</Link>
+                  </li>
+                  <li
+                    className="settingsToggle"
+                    onClick={() => showSettings(true)}
+                  >
+                    <span>{response.firstName}</span>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li>
+                    <Link to="/dashboard">Dashboard</Link>
+                  </li>
+                  <li>
+                    <Link to="/organdonors">Organ Donors</Link>
+                  </li>
+                </>
+              )}
             </>
           ) : (
             <>

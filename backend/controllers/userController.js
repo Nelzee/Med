@@ -87,5 +87,36 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     throw new Error("User Not Found");
   }
 });
+const registerOrgans = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.body.id);
 
-module.exports = { authUser, updateUserProfile, registerUser };
+  if (user) {
+    user.organDonor = true;
+    user.organs = req.body.organs;
+
+    const updatedUser = await user.save();
+
+    res.json({ message: "registration successful" });
+  } else {
+    res.status(404);
+    throw new Error("ragistration failed");
+  }
+});
+const getOrganDonors = asyncHandler(async (req, res) => {
+  const organdonors = await User.find({ organDonor: true });
+
+  if (organdonors) {
+    res.json(organdonors);
+  } else {
+    res.status(404);
+    throw new Error("ragistration failed");
+  }
+});
+
+module.exports = {
+  authUser,
+  updateUserProfile,
+  registerUser,
+  registerOrgans,
+  getOrganDonors,
+};

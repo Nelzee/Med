@@ -11,6 +11,7 @@ import DoctorRegisterPage from "./pages/doctorRegisterPage/DoctorRestisterPage";
 import Dashboard from "./pages/dashboard/Dashboard";
 import AppointmentsPage from "./pages/Appointments/AppointmentsPage";
 import Footer from "./components/footer/Footer";
+import OrganDonors from "./pages/organDonors/OrganDonors";
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
           <Route path="/doctorReg" element={<DoctorRegisterPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/appointments" element={<AppointmentsPage />} />
+          <Route path="/organdonors" element={<OrganDonors />} />
         </Routes>
         <Footer />
       </Router>

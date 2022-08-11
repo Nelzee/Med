@@ -7,10 +7,10 @@ const LandingPage = () => {
   const navigate = useNavigate();
 
   const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const { response } = userLogin;
 
   useEffect(() => {
-    if (!userInfo) {
+    if (!response) {
       navigate("/");
     }
   }, []);
