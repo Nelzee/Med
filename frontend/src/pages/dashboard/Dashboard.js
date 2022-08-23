@@ -6,6 +6,7 @@ import Appointments from "../../components/Modals/makeAppointment/Appointments";
 import "./Dashboard.css";
 import axios from "../../api/axios";
 import ScheduleAppointment from "../../components/Modals/scheduleAppointment/ScheduleAppointment";
+import ScheduleAppointment1 from "../../components/Modals/scheduleAppointment/ScheduleAppointment1";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -57,9 +58,9 @@ const Dashboard = () => {
                         <p>{appointment.details}</p>
                       </div>
                       <div className="appointment_schelude_toggle">
-                        <button onClick={(e) => handleSchedule(e, appointment)}>
-                          schedule appointment
-                        </button>
+                        <ScheduleAppointment1
+                          appointmentDetails={appointment}
+                        />
                       </div>
                     </div>
                   );

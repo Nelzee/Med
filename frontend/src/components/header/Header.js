@@ -52,6 +52,12 @@ const Header = () => {
                   <li>
                     <Link to="/organdonors">Organ Donors</Link>
                   </li>
+                  <li
+                    className="settingsToggle"
+                    onClick={() => showSettings(true)}
+                  >
+                    <span>{response.firstName}</span>
+                  </li>
                 </>
               )}
             </>
