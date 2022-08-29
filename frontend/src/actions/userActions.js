@@ -62,6 +62,6 @@ export const register = (credentials) => async (dispatch) => {
     });
   }
 };
-export const logout = (e) => async (dispcth) => {
+export const logout = () => async (dispcth) => {
   dispcth({ type: USER_LOGOUT });
 };

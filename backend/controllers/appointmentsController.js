@@ -96,7 +96,7 @@ const deleteAppointment = asyncHandler(async (req, res) => {
 
     if (appointment) {
       await appointment.remove();
-      res.json({ message: "note removed" });
+      res.json({ message: "Scheduled appointment cancelled" });
     } else {
       res.status(404);
       throw new Error("Appointment not found");

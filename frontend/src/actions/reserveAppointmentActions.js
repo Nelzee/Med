@@ -1,5 +1,10 @@
 import axios from "../api/axios";
 import {
+  DELETE_APPOINTMENT_FAIL,
+  DELETE_APPOINTMENT_REQUEST,
+  DELETE_APPOINTMENT_SUCCESS,
+} from "../constants/deleteAppointmentConstants";
+import {
   RESERVE_APPOINTMENT_FAIL,
   RESERVE_APPOINTMENT_REQUEST,
   RESERVE_APPOINTMENT_SUCCESS,
@@ -31,8 +36,9 @@ export const makeAppointment = (appointment) => async (dispatch) => {
   }
 };
 
-export const deleteAppointment = (id) => async (dispcth) => {
+export const deleteAppointment = (id) => async (dispatch) => {
   try {
+    dispatch({ type: DELETE_APPOINTMENT_REQUEST });
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -43,7 +49,14 @@ export const deleteAppointment = (id) => async (dispcth) => {
       `/api/appointments/delete/${id}`,
       config
     );
+    dispatch({ type: DELETE_APPOINTMENT_SUCCESS, payload: data });
   } catch (error) {
-    console.log(error);
+    dispatch({
+      type: DELETE_APPOINTMENT_FAIL,
+      payload:
+        error?.response && error?.response?.data?.message
+          ? error?.response?.data?.message
+          : error?.message,
+    });
   }
 };

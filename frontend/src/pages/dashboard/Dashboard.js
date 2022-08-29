@@ -5,7 +5,7 @@ import OrganDonor from "../../components/Modals/organDonor/OrganDonor";
 import Appointments from "../../components/Modals/makeAppointment/Appointments";
 import "./Dashboard.css";
 import axios from "../../api/axios";
-import ScheduleAppointment from "../../components/Modals/scheduleAppointment/ScheduleAppointment";
+import RequestAppointmentModal from "../../components/Modals/RequestAppointmentModal";
 import ScheduleAppointment1 from "../../components/Modals/scheduleAppointment/ScheduleAppointment1";
 
 const Dashboard = () => {
@@ -71,18 +71,6 @@ const Dashboard = () => {
         </div>
       ) : (
         <div className="dashBoardContainer">
-          <div className="dashContainer appointments">
-            <h2>Appointments</h2>
-            <p>Request or view the appointements </p>
-            <div className="botton_container">
-              <button onClick={() => showAppointmentModel(true)}>
-                View Appointments
-              </button>
-              <button onClick={() => showAppointmentModel(true)}>
-                Request Appointment
-              </button>
-            </div>
-          </div>
           <div className="dashContainer organ">
             <h2>Organ Donations</h2>
             <p>Opt into the organ donation program</p>
@@ -97,12 +85,7 @@ const Dashboard = () => {
       )}
 
       {organs && <OrganDonor toggle={setOrgans} />}
-      {scheduleAppointmentModal && (
-        <ScheduleAppointment
-          toggle={setScheduleAppointmentModal}
-          appointment={appointment}
-        />
-      )}
+
       {appointmentsModal && <Appointments toggle={showAppointmentModel} />}
     </div>
   );

@@ -5,7 +5,10 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { userLoginReducer, userRegisterReducer } from "./reducers/userReducer";
 import { diseaseReducer } from "./reducers/diseaseReducer";
-import { reserveAppointmentReducer } from "./reducers/reserveAppointmentReducer";
+import {
+  deleteAppointmentReducer,
+  reserveAppointmentReducer,
+} from "./reducers/reserveAppointmentReducer";
 import { approveAppointmentReducer } from "./reducers/approveAppointmentReducer";
 
 const reducer = combineReducers({
@@ -14,6 +17,7 @@ const reducer = combineReducers({
   userRegister: userRegisterReducer,
   reserveAppointment: reserveAppointmentReducer,
   approveAppointment: approveAppointmentReducer,
+  deleteAppointment: deleteAppointmentReducer,
 });
 const initialState = {};
 

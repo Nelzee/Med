@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Settings from "../Modals/settings/Settings";
+import Dropdwn from "../DropDown";
 import "./header.css";
 
 const Header = () => {
@@ -37,11 +38,13 @@ const Header = () => {
                   <li>
                     <Link to="/appointments">Appointments</Link>
                   </li>
-                  <li
-                    className="settingsToggle"
-                    onClick={() => showSettings(true)}
-                  >
-                    <span>{response.firstName}</span>
+                  <li className="settingsToggle">
+                    <Dropdwn
+                      cred={{
+                        name: response.firstName,
+                        email: response.email,
+                      }}
+                    />
                   </li>
                 </>
               ) : (
@@ -56,7 +59,14 @@ const Header = () => {
                     className="settingsToggle"
                     onClick={() => showSettings(true)}
                   >
-                    <span>{response.firstName}</span>
+                    <span>
+                      <Dropdwn
+                        cred={{
+                          name: response.firstName,
+                          email: response.email,
+                        }}
+                      />
+                    </span>
                   </li>
                 </>
               )}
