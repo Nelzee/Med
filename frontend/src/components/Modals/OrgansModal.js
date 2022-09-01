@@ -1,11 +1,20 @@
-import { Modal, useModal, Button, Text } from "@nextui-org/react";
+import {
+  Modal,
+  useModal,
+  Button,
+  Text,
+  Checkbox,
+  Grid,
+} from "@nextui-org/react";
+import { useState } from "react";
 
 export default function App() {
   const { setVisible, bindings } = useModal();
+  const [selected, setSelected] = useState(["buenos-aires", "sydney"]);
   return (
     <div>
       <Button auto shadow color="secondary" onClick={() => setVisible(true)}>
-        Open modal
+        Select Organs
       </Button>
       <Modal
         scroll
@@ -16,38 +25,34 @@ export default function App() {
       >
         <Modal.Header>
           <Text id="modal-title" size={18}>
-            Modal with a lot of content
+            Select Organs
           </Text>
         </Modal.Header>
         <Modal.Body>
-          <Text id="modal-description">
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
-            ac consectetur ac, vestibulum at eros. Praesent commodo cursus
-            magna, vel scelerisque nisl consectetur et. Cras mattis consectetur
-            purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
-            egestas eget quam. Morbi leo risus, porta ac consectetur ac,
-            vestibulum at eros. Praesent commodo cursus magna, vel scelerisque
-            nisl consectetur et. Cras mattis consectetur purus sit amet
-            fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget
-            quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
-            ac consectetur ac, vestibulum at eros. Praesent commodo cursus
-            magna, vel scelerisque nisl consectetur et. Cras mattis consectetur
-            purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
-            egestas eget quam. Morbi leo risus, porta ac consectetur ac,
-            vestibulum at eros. Praesent commodo cursus magna, vel scelerisque
-            nisl consectetur et. Cras mattis consectetur purus sit amet
-            fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget
-            quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
-            ac consectetur ac, vestibulum at eros. Praesent commodo cursus
-            magna, vel scelerisque nisl consectetur et. Cras mattis consectetur
-          </Text>
+          <Grid.Container gap={2}>
+            <Grid>
+              <Checkbox.Group
+                label="Select cities (controlled)"
+                color="secondary"
+                value={selected}
+                onChange={setSelected}
+              >
+                <Checkbox value="buenos-aires">Buenos Aires</Checkbox>
+                <Checkbox value="auckland">Auckland</Checkbox>
+                <Checkbox value="sydney">Sydney</Checkbox>
+              </Checkbox.Group>
+            </Grid>
+            <Grid>
+              <Checkbox.Group
+                label="Select cities (uncontrolled)"
+                defaultValue={["buenos-aires", "auckland"]}
+              >
+                <Checkbox value="buenos-aires">Buenos Aires</Checkbox>
+                <Checkbox value="auckland">Auckland</Checkbox>
+                <Checkbox value="sydney">Sydney</Checkbox>
+              </Checkbox.Group>
+            </Grid>
+          </Grid.Container>
         </Modal.Body>
         <Modal.Footer>
           <Button auto flat color="error" onClick={() => setVisible(false)}>
