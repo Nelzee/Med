@@ -2,8 +2,10 @@ import React from "react";
 import { Dropdown, Text } from "@nextui-org/react";
 import { useDispatch } from "react-redux";
 import { logout } from "../actions/userActions";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export default function App({ cred }) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [selected, setSelected] = React.useState(new Set(["text"]));
 
@@ -13,7 +15,7 @@ export default function App({ cred }) {
   );
 
   const handleLogout = () => {
-    console.log("logout");
+    navigate("/");
     dispatch(logout());
   };
 
@@ -42,24 +44,13 @@ export default function App({ cred }) {
       >
         <Dropdown.Item key="profile" css={{ height: "$18" }}>
           <Text b color="inherit" css={{ d: "flex" }}>
-            Signed in as
+            Signed in with
           </Text>
           <Text b color="inherit" css={{ d: "flex" }}>
             {cred.email}
           </Text>
         </Dropdown.Item>
-        <Dropdown.Item key="settings" withDivider>
-          My Settings
-        </Dropdown.Item>
-        <Dropdown.Item key="team_settings">Team Settings</Dropdown.Item>
-        <Dropdown.Item key="analytics" withDivider>
-          Analytics
-        </Dropdown.Item>
-        <Dropdown.Item key="system">System</Dropdown.Item>
-        <Dropdown.Item key="configurations">Configurations</Dropdown.Item>
-        <Dropdown.Item key="help_and_feedback" withDivider>
-          Help & Feedback
-        </Dropdown.Item>
+
         <Dropdown.Item key="logout" color="error" withDivider>
           Log Out
         </Dropdown.Item>

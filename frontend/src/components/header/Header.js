@@ -33,7 +33,7 @@ const Header = () => {
               {response.role === "user" ? (
                 <>
                   <li>
-                    <Link to="/dashboard">Dashboard</Link>
+                    <Link to="/profile">Profile</Link>
                   </li>
                   <li>
                     <Link to="/appointments">Appointments</Link>
@@ -83,7 +83,6 @@ const Header = () => {
           )}
         </ul>
       </nav>
-      {settings && <Settings toggle={showSettings} />}
     </div>
   );
 };

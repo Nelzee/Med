@@ -12,6 +12,7 @@ import Dashboard from "./pages/dashboard/Dashboard";
 import AppointmentsPage from "./pages/Appointments/AppointmentsPage";
 import Footer from "./components/footer/Footer";
 import OrganDonors from "./pages/organDonors/OrganDonors";
+import Profile from "./pages/profile/Profile";
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/appointments" element={<AppointmentsPage />} />
           <Route path="/organdonors" element={<OrganDonors />} />
+          <Route path="/Profile" element={<Profile />} />
         </Routes>
         <Footer />
       </Router>
